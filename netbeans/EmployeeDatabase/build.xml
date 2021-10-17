@@ -7,12 +7,12 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="EmployeeDatabase" default="default" basedir=".">
-    <description>Builds, tests, and runs the project EmployeeDatabase.</description>
+<project name="StudentDatabase" default="default" basedir=".">
+    <description>Builds, tests, and runs the project StudentDatabase.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
-    There exist several targets which are by default empty and which can be 
+    There exist several targets which are by default stdty and which can be 
     used for execution of your tasks. These targets are usually executed 
     before and after some main targets. They are: 
 
@@ -58,7 +58,7 @@
 
     An example of overriding the target for project execution could look like this:
 
-        <target name="run" depends="EmployeeDatabase-impl.jar">
+        <target name="run" depends="StudentDatabase-impl.jar">
             <exec dir="bin" executable="launcher.exe">
                 <arg file="${dist.jar}"/>
             </exec>

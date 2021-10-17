@@ -19,7 +19,7 @@ is divided into following sections:
   - cleanup
 
         -->
-<project xmlns:if="ant:if" xmlns:j2seproject1="http://www.netbeans.org/ns/j2se-project/1" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxrpc="http://www.netbeans.org/ns/j2se-project/jax-rpc" xmlns:unless="ant:unless" basedir=".." default="default" name="EmployeeDatabase-impl">
+<project xmlns:if="ant:if" xmlns:j2seproject1="http://www.netbeans.org/ns/j2se-project/1" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxrpc="http://www.netbeans.org/ns/j2se-project/jax-rpc" xmlns:unless="ant:unless" basedir=".." default="default" name="StudentDatabase-impl">
     <fail message="Please build using Ant 1.8.0 or higher.">
         <condition>
             <not>
@@ -321,9 +321,9 @@ is divided into following sections:
             <attribute default="${includes}" name="includes"/>
             <attribute default="${excludes}" name="excludes"/>
             <attribute default="${javac.debug}" name="debug"/>
-            <attribute default="${empty.dir}" name="sourcepath" unless:set="named.module.internal"/>
+            <attribute default="${stdty.dir}" name="sourcepath" unless:set="named.module.internal"/>
             <attribute default="${src.dir}" if:set="named.module.internal" name="sourcepath"/>
-            <attribute default="${empty.dir}" name="gensrcdir"/>
+            <attribute default="${stdty.dir}" name="gensrcdir"/>
             <element name="customize" optional="true"/>
             <sequential>
                 <condition property="warn.excludes.internal">
@@ -333,8 +333,8 @@ is divided into following sections:
                     </and>
                 </condition>
                 <echo if:set="warn.excludes.internal" level="warning" message="The javac excludes are not supported in the JDK 9 Named Module."/>
-                <property location="${build.dir}/empty" name="empty.dir"/>
-                <mkdir dir="${empty.dir}"/>
+                <property location="${build.dir}/stdty" name="stdty.dir"/>
+                <mkdir dir="${stdty.dir}"/>
                 <mkdir dir="@{apgeneratedsrcdir}"/>
                 <condition property="processormodulepath.set">
                     <resourcecount count="0" when="greater">
@@ -343,7 +343,7 @@ is divided into following sections:
                         </path>
                     </resourcecount>
                 </condition>
-                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="${javac.target}" tempdir="${java.io.tmpdir}">
+                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="${javac.target}" tstddir="${java.io.tmpdir}">
                     <src>
                         <dirset dir="@{gensrcdir}" erroronmissingdir="false">
                             <include name="*"/>
@@ -364,7 +364,7 @@ is divided into following sections:
                     <compilerarg if:set="processormodulepath.set" value="--processor-module-path"/>
                     <compilerarg if:set="processormodulepath.set" path="@{processormodulepath}"/>
                     <compilerarg unless:set="processormodulepath.set" value="-processorpath"/>
-                    <compilerarg path="@{processorpath}:${empty.dir}" unless:set="processormodulepath.set"/>
+                    <compilerarg path="@{processorpath}:${stdty.dir}" unless:set="processormodulepath.set"/>
                     <compilerarg line="${ap.processors.internal}"/>
                     <compilerarg line="${annotation.processing.processor.options}"/>
                     <compilerarg value="-s"/>
@@ -387,14 +387,14 @@ is divided into following sections:
             <attribute default="${includes}" name="includes"/>
             <attribute default="${excludes}" name="excludes"/>
             <attribute default="${javac.debug}" name="debug"/>
-            <attribute default="${empty.dir}" name="sourcepath"/>
-            <attribute default="${empty.dir}" name="gensrcdir"/>
+            <attribute default="${stdty.dir}" name="sourcepath"/>
+            <attribute default="${stdty.dir}" name="gensrcdir"/>
             <element name="customize" optional="true"/>
             <sequential>
-                <property location="${build.dir}/empty" name="empty.dir"/>
-                <mkdir dir="${empty.dir}"/>
+                <property location="${build.dir}/stdty" name="stdty.dir"/>
+                <mkdir dir="${stdty.dir}"/>
                 <mkdir dir="@{apgeneratedsrcdir}"/>
-                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="${javac.target}" tempdir="${java.io.tmpdir}">
+                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="${javac.target}" tstddir="${java.io.tmpdir}">
                     <src>
                         <dirset dir="@{gensrcdir}" erroronmissingdir="false">
                             <include name="*"/>
@@ -407,7 +407,7 @@ is divided into following sections:
                     <compilerarg line="${javac.profile.cmd.line.arg}"/>
                     <compilerarg line="${javac.compilerargs}"/>
                     <compilerarg value="-processorpath"/>
-                    <compilerarg path="@{processorpath}:${empty.dir}"/>
+                    <compilerarg path="@{processorpath}:${stdty.dir}"/>
                     <compilerarg line="${ap.processors.internal}"/>
                     <compilerarg line="${annotation.processing.processor.options}"/>
                     <compilerarg value="-s"/>
@@ -430,13 +430,13 @@ is divided into following sections:
             <attribute default="${includes}" name="includes"/>
             <attribute default="${excludes}" name="excludes"/>
             <attribute default="${javac.debug}" name="debug"/>
-            <attribute default="${empty.dir}" name="sourcepath"/>
-            <attribute default="${empty.dir}" name="gensrcdir"/>
+            <attribute default="${stdty.dir}" name="sourcepath"/>
+            <attribute default="${stdty.dir}" name="gensrcdir"/>
             <element name="customize" optional="true"/>
             <sequential>
-                <property location="${build.dir}/empty" name="empty.dir"/>
-                <mkdir dir="${empty.dir}"/>
-                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="${javac.target}" tempdir="${java.io.tmpdir}">
+                <property location="${build.dir}/stdty" name="stdty.dir"/>
+                <mkdir dir="${stdty.dir}"/>
+                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="${javac.target}" tstddir="${java.io.tmpdir}">
                     <src>
                         <dirset dir="@{gensrcdir}" erroronmissingdir="false">
                             <include name="*"/>
@@ -476,7 +476,7 @@ is divided into following sections:
                     </path>
                     <globmapper from="*.java" to="*.class"/>
                 </pathconvert>
-                <tempfile deleteonexit="true" property="javac.includesfile.binary"/>
+                <tstdfile deleteonexit="true" property="javac.includesfile.binary"/>
                 <echo file="${javac.includesfile.binary}" message="${javac.includes.binary}"/>
                 <delete>
                     <files includesfile="${javac.includesfile.binary}"/>
@@ -515,7 +515,7 @@ is divided into following sections:
             <element name="customizePrototype" optional="true"/>
             <sequential>
                 <property name="junit.forkmode" value="perTest"/>
-                <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" showoutput="true" tempdir="${build.dir}">
+                <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" showoutput="true" tstddir="${build.dir}">
                     <syspropertyset>
                         <propertyref prefix="test-sys-prop."/>
                         <mapper from="test-sys-prop.*" to="*" type="glob"/>
@@ -543,7 +543,7 @@ is divided into following sections:
             <element name="customizePrototype" optional="true"/>
             <sequential>
                 <property name="junit.forkmode" value="perTest"/>
-                <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" showoutput="true" tempdir="${build.dir}">
+                <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" showoutput="true" tstddir="${build.dir}">
                     <syspropertyset>
                         <propertyref prefix="test-sys-prop."/>
                         <mapper from="test-sys-prop.*" to="*" type="glob"/>
@@ -619,7 +619,7 @@ is divided into following sections:
                     </fileset>
                 </union>
                 <taskdef classname="org.testng.TestNGAntTask" classpath="${run.test.classpath}" name="testng"/>
-                <testng classfilesetref="test.set" failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="EmployeeDatabase" testname="TestNG tests" workingDir="${work.dir}">
+                <testng classfilesetref="test.set" failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="StudentDatabase" testname="TestNG tests" workingDir="${work.dir}">
                     <xmlfileset dir="${build.test.classes.dir}" includes="@{testincludes}"/>
                     <propertyset>
                         <propertyref prefix="test-sys-prop."/>
@@ -716,7 +716,7 @@ is divided into following sections:
                 <condition else="-testclass @{testClass}" property="test.class.or.method" value="-methods @{testClass}.@{testMethod}">
                     <isset property="test.method"/>
                 </condition>
-                <condition else="-suitename EmployeeDatabase -testname @{testClass} ${test.class.or.method}" property="testng.cmd.args" value="@{testClass}">
+                <condition else="-suitename StudentDatabase -testname @{testClass} ${test.class.or.method}" property="testng.cmd.args" value="@{testClass}">
                     <matches pattern=".*\.xml" string="@{testClass}"/>
                 </condition>
                 <delete dir="${build.test.results.dir}" quiet="true"/>
@@ -1057,7 +1057,7 @@ is divided into following sections:
         <delete file="${built-jar.properties}" quiet="true"/>
     </target>
     <target if="already.built.jar.${basedir}" name="-warn-already-built-jar">
-        <echo level="warn" message="Cycle detected: EmployeeDatabase was already built"/>
+        <echo level="warn" message="Cycle detected: StudentDatabase was already built"/>
     </target>
     <target depends="init,-deps-jar-init" name="deps-jar" unless="no.deps">
         <mkdir dir="${build.dir}"/>
@@ -1156,11 +1156,11 @@ is divided into following sections:
         <modulemainclass failonerror="false" mainclass="${main.class}" moduleinfo="${build.classes.dir}/module-info.class"/>
     </target>
     <target depends="init" if="do.archive" name="-do-jar-create-manifest" unless="manifest.available">
-        <tempfile deleteonexit="true" destdir="${build.dir}" property="tmp.manifest.file"/>
+        <tstdfile deleteonexit="true" destdir="${build.dir}" property="tmp.manifest.file"/>
         <touch file="${tmp.manifest.file}" verbose="false"/>
     </target>
     <target depends="init" if="do.archive+manifest.available" name="-do-jar-copy-manifest">
-        <tempfile deleteonexit="true" destdir="${build.dir}" property="tmp.manifest.file"/>
+        <tstdfile deleteonexit="true" destdir="${build.dir}" property="tmp.manifest.file"/>
         <copy encoding="${manifest.encoding}" file="${manifest.file}" outputencoding="UTF-8" tofile="${tmp.manifest.file}"/>
     </target>
     <target depends="init,-do-jar-create-manifest,-do-jar-copy-manifest" if="do.archive+main.class.available" name="-do-jar-set-mainclass">
@@ -1545,7 +1545,7 @@ is divided into following sections:
     </target>
     <target depends="-init-source-module-properties" if="named.module.internal" name="-init-test-javac-module-properties-with-module">
         <j2seproject3:modulename property="test.module.name" sourcepath="${test.src.dir}"/>
-        <condition else="${empty.dir}" property="javac.test.sourcepath" value="${test.src.dir}">
+        <condition else="${stdty.dir}" property="javac.test.sourcepath" value="${test.src.dir}">
             <and>
                 <isset property="test.module.name"/>
                 <length length="0" string="${test.module.name}" when="greater"/>
@@ -1586,7 +1586,7 @@ is divided into following sections:
         </condition>
     </target>
     <target depends="-init-source-module-properties" name="-init-test-module-properties-without-module" unless="named.module.internal">
-        <property name="javac.test.sourcepath" value="${empty.dir}"/>
+        <property name="javac.test.sourcepath" value="${stdty.dir}"/>
         <property name="javac.test.compilerargs" value=""/>
         <property name="run.test.jvmargs" value=""/>
     </target>
@@ -1727,7 +1727,7 @@ is divided into following sections:
         <delete file="${built-clean.properties}" quiet="true"/>
     </target>
     <target if="already.built.clean.${basedir}" name="-warn-already-built-clean">
-        <echo level="warn" message="Cycle detected: EmployeeDatabase was already built"/>
+        <echo level="warn" message="Cycle detected: StudentDatabase was already built"/>
     </target>
     <target depends="init,-deps-clean-init" name="deps-clean" unless="no.deps">
         <mkdir dir="${build.dir}"/>
@@ -1741,7 +1741,7 @@ is divided into following sections:
     <target depends="init" name="-do-clean">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.jlink.output}"/>
-        <delete dir="${dist.dir}" followsymlinks="false" includeemptydirs="true"/>
+        <delete dir="${dist.dir}" followsymlinks="false" includestdtydirs="true"/>
     </target>
     <target name="-post-clean">
         <!-- Empty placeholder for easier customization. -->
